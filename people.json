@@ -1,0 +1,15 @@
+{
+    "Lauri" : {"spouse" : "Joseph"},
+    "Amy" : {"spouse" : "Rob"},
+    "Guy" : {"spouse" : "Shylah"},
+    "Shylah" : {"spouse" : "Guy"},
+    "Leah" : {"spouse" : "Justin"},
+    "Justin" : {"spouse" : "Leah"},
+    "Stephen" : {"spouse" : "Dien"},
+    "Dien" : {"spouse" : "Stephen"},
+    "Daniel" : {"spouse" : "None"},
+    "Seth" : {"spouse" : "Monica"},
+    "Monica" : {"spouse" : "Seth"},
+    "David" : {"spouse" : "None"},
+    "Nicholas" : {"spouse" : "None"}
+}
