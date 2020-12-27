@@ -1,0 +1,9 @@
+table {
+    width: 50%;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+tr:nth-child(odd) {
+    background: lightgray;
+  }

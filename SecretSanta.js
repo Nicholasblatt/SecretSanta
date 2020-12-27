@@ -1,11 +1,29 @@
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
 
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
 
-function isSpouse(personobj, name) {
-    if (personobj.spouse === name) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
+function isbanned(personobj, name) {
+    if (personobj.banned.includes(name)) {
         return true;
     }
     return false;
 }
+
 function isSelf(name1, name2) {
     if (name1 === name2) {
         return true;
@@ -13,64 +31,79 @@ function isSelf(name1, name2) {
     return false;
 }
 
+
+
+
+
 function mainRandomizer() {
     $.getJSON('people.json', function (people) {
 
         var namelist = [];
         $.each(people, function (name, info) {
-            console.log(name, isSpouse(people[name], "Monica"))
-            console.log(name, isSelf(name, "Monica"))
             namelist.push(name);
-            //namelist.push("<li>" + name + ", " + info.spouse + "</li>");
+            //namelist.push("<li>" + name + ", " + info.banned + "</li>");
         });
 
-        console.log(namelist);
-
-        console.log(people[namelist[0]]);
+        shuffle(namelist);
 
         var notcomplete = true;
+
+
+        var matchesmade = [];
+        var preferencelist = [];
+        var randBagnum = 0;
 
         while (notcomplete) {
             var matchers = namelist.slice();
             var matchies = namelist.slice();
-            var matchesmade = [];
-            var megaimpossible = false;
+            matchesmade.empty;
+            preferencelist.empty;
+
             while (matchers.length > 0) {
-                var notimpossible = true;
-                var rand = 0;
-                while (notimpossible && !megaimpossible) {
+                var impossible = true;
+                var indicator = true;
+                var randmBag = [];
+                preferencelist = (people[matchers[0]].preferences).slice();
+                shuffle(preferencelist);
+                while (preferencelist.length > 0 && indicator) {
+                    if (matchies.includes(preferencelist[0])) {
+                        const myind = matchies.indexOf(preferencelist[0]);
+                        matchesmade.push([matchers[0], matchies[myind]]);
+                        matchers.shift();
+                        matchies.splice(myind, 1);
+                        indicator = false;
+                    }
+                    else {
+                        preferencelist.shift();
+                    }
+                }
 
-                    rand = Math.floor(Math.random() * (matchies.length));
-
-                    notimpossible = (isSpouse(people[matchers[0]], matchies[rand])) || isSelf(matchers[0], matchies[rand]);
-
-
-
-                    if (matchies <= 2 && notimpossible) {
-                        var index = matchies[matchies.length - rand];
-                        megaimpossible = (isSpouse(people[matchers[0]], matchies[index])) || isSelf(matchers[0], matchies[index]);
+                if (preferencelist.length === 0) {
+                    randmBag.empty;
+                    for(var i = 0; i < matchies.length; i++){
+                        randmBag.push(i);
                     }
 
-                    console.log(rand, notimpossible, megaimpossible);
-                }
-                if (megaimpossible) {
-                    break;
-                }
+                    shuffle(randmBag);
+                    while (impossible && randmBag.length > 0) {
 
-                matchesmade.push([matchers[0], matchies[rand]]);
-                matchers.shift();
-                matchies.splice(rand, 1);
+                        randBagnum = randmBag[0];
 
+                        impossible = (isbanned(people[matchers[0]], matchies[randBagnum])) || isSelf(matchers[0], matchies[randBagnum]);
+                        randmBag.shift();
+
+                    }
+                    matchesmade.push([matchers[0], matchies[randBagnum]]);
+                    matchers.shift();
+                    matchies.splice(randBagnum, 1);
+                }
 
             }
-            if (!megaimpossible) {
+
+            if(randmBag.length === 0){
                 notcomplete = false;
             }
         }
-
-        //matchesmade.push([matchnames[0], matchnames[1]]);
-
-        console.log(matchesmade);
 
         var htmlList = []
 

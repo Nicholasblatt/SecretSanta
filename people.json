@@ -1,15 +1,15 @@
 {
-    "Lauri" : {"spouse" : "Joseph"},
-    "Amy" : {"spouse" : "Rob"},
-    "Guy" : {"spouse" : "Shylah"},
-    "Shylah" : {"spouse" : "Guy"},
-    "Leah" : {"spouse" : "Justin"},
-    "Justin" : {"spouse" : "Leah"},
-    "Stephen" : {"spouse" : "Dien"},
-    "Dien" : {"spouse" : "Stephen"},
-    "Daniel" : {"spouse" : "None"},
-    "Seth" : {"spouse" : "Monica"},
-    "Monica" : {"spouse" : "Seth"},
-    "David" : {"spouse" : "None"},
-    "Nicholas" : {"spouse" : "None"}
+    "Lauri" : {"banned" : ["Joseph", "Justin", "Daniel", "David", "Dien", "Seth"], "preferences" : ["Amy", "Monica", "Leah"]},
+    "Amy" : {"banned" : ["Rob", "Justin"], "preferences" : ["Lauri", "Monica", "Leah", "Shylah"]},
+    "Guy" : {"banned" : ["Shylah", "Justin"], "preferences" : ["Amy", "Lauri", "Leah"]},
+    "Shylah" : {"banned" : ["Guy", "Justin"], "preferences" : ["Amy", "Daniel", "Leah"]},
+    "Leah" : {"banned" : ["Justin"], "preferences" : ["Amy", "Lauri", "Monica"]},
+    "Justin" : {"banned" : ["Leah", "Justin"], "preferences" : ["Amy", "Seth", "Daniel"]},
+    "Stephen" : {"banned" : ["Dien", "Justin"], "preferences" : ["Nicholas", "Guy", "David"]},
+    "Dien" : {"banned" : ["Stephen", "Justin"], "preferences" : ["Monica", "Amy", "Leah", "Lauri"]},
+    "Daniel" : {"banned" : ["Seth", "Justin"], "preferences" : ["Nicholas", "David", "Seth"]},
+    "Seth" : {"banned" : ["Monica", "Justin"], "preferences" : ["Daniel", "Guy", "Nicholas", "David"]},
+    "Monica" : {"banned" : ["Seth", "Justin"], "preferences" : ["Nicholas", "David", "Dien"]},
+    "David" : {"banned" : ["Seth", "Justin"], "preferences" : ["Nicholas", "Stephen", "Dien"]},
+    "Nicholas" : {"banned" : [], "preferences" : ["David", "Seth", "Monica"]}
 }
