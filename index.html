@@ -5,6 +5,34 @@
         
     </head>
     <body>
+        <header>
+            <h1 class="header-logo">To Do List</h1>
+            <form class="search-form" autocomplete="on">
+              <input class="search-input" type="text" placeholder="Search Task">
+              <button class="search-button">Search</button>
+              <button class="clear-button">Clear</button>
+            </form>
+          </header>
+          <div class="container">
+            <form class="to-do-form" autocomplete="off">
+              <input class="fname" type="text" placeholder="To Do" required>
+              <p>
+                <input class="pref" id="pref1" type="text" placeholder="Preference" required>
+                <input class="pref" id="pref2" type="text" placeholder="Preference" required>
+                <input class="pref" id="pref3" type="text" placeholder="Preference" required>
+              </p>
+              <p>
+                <input class="aversion" id="aversion1" type="text" placeholder="Aversion" required>
+                <input class="aversion" id="aversion2" type="text" placeholder="Aversion" required>
+                <input class="aversion" id="aversion3" type="text" placeholder="Aversion" required>
+              </p>
+              <button class="add-button">+ Add</button>
+            </form>
+            <div class="list-container">
+              <ul class="to-do-list">
+              </ul>
+            </div>
+          </div>
         <button onclick="mainRandomizer()">Randomize!</button>
         <div id="result"></div>
     </body>

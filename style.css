@@ -7,3 +7,251 @@ table {
 tr:nth-child(odd) {
     background: lightgray;
   }
+
+  /* GLOBAL */
+
+* {
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 100%;
+    font-family: monospace;
+  }
+  
+  body {
+    overflow: scroll;
+    margin: 0;
+  }
+  
+  /* HEADER */
+  
+  header {
+    position: fixed;
+    height: 60px;
+    top: 0;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .header-logo {
+    line-height: 40px;
+    color: white;
+    width: fit-content;
+    height: fit-content;
+    margin-left: 60px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  
+  .search-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-right: 60px;
+    align-items: center;
+  }
+  
+  .search-input {
+    width: 100%;
+    height: 40px;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 15px;
+    padding: 5px;
+    font-family: monospace;
+    margin: 0px 5px;
+  }
+  
+  .search-button {
+    width: fit-content;
+    height: 35px;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 15px;
+    font-family: monospace;
+    margin: 0px 5px;
+    cursor: pointer;
+  }
+  
+  .search-button:hover {
+    transition: all 0.25s ease;
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+  }
+  
+  .clear-button {
+    width: fit-content;
+    height: 35px;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 15px;
+    font-family: monospace;
+    margin: 0px 5px;
+    cursor: pointer;
+  }
+  
+  .clear-button:hover {
+    transition: all 0.25s ease;
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+  }
+  
+  /* CONTAINER */
+  
+  .container {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* SEARCH BAR */
+  
+  .to-do-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .fname {
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 5px;
+    font-family: monospace;
+    margin: 0px 5px;
+  }
+
+  .pref {
+    width: 100%;
+    height: 30px;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 5px;
+    font-family: monospace;
+    margin: 0px 5px;
+  }
+
+  .aversion {
+    width: 100%;
+    height: 30px;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 5px;
+    font-family: monospace;
+    margin: 0px 5px;
+  }
+  
+  .add-button {
+    width: 200px;
+    height: 35px;
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: monospace;
+    margin: 0px 5px;
+    cursor: pointer;
+  }
+  
+  .add-button:hover {
+    transition: all 0.25s ease;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+  }
+  
+  /* LIST */
+  
+  .list-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .to-do-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .list-item {
+    width: 50%;
+    height: fit-content;
+    padding: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .to-do-content {
+    max-width: 70%;
+    list-style-type: none;
+    font-size: 20px;
+    font-family: monospace;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+  
+  .delete-button {
+    width: 50px;
+    height: 35px;
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: monospace;
+    margin: 0px 5px;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    transition: all 0.25s ease;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+  }
+  
+  /* SEARCH */
+  
+  .search-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .search-result {
+    font-size: 20px;
+  }
+  

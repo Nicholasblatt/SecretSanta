@@ -1,3 +1,5 @@
+var globalJSON = {};
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -36,13 +38,10 @@ function isSelf(name1, name2) {
 
 
 function mainRandomizer() {
-    $.getJSON('people.json', function (people) {
-
         var namelist = [];
-        $.each(people, function (name, info) {
-            namelist.push(name);
-            //namelist.push("<li>" + name + ", " + info.banned + "</li>");
-        });
+        Object.keys(globalJSON).forEach(key => {
+            namelist.push(key);
+          });
 
         shuffle(namelist);
 
@@ -63,7 +62,7 @@ function mainRandomizer() {
                 var impossible = true;
                 var indicator = true;
                 var randmBag = [];
-                preferencelist = (people[matchers[0]].preferences).slice();
+                preferencelist = (globalJSON[matchers[0]].preferences).slice();
                 shuffle(preferencelist);
                 while (preferencelist.length > 0 && indicator) {
                     if (matchies.includes(preferencelist[0])) {
@@ -89,7 +88,7 @@ function mainRandomizer() {
 
                         randBagnum = randmBag[0];
 
-                        impossible = (isbanned(people[matchers[0]], matchies[randBagnum])) || isSelf(matchers[0], matchies[randBagnum]);
+                        impossible = (isbanned(globalJSON[matchers[0]], matchies[randBagnum])) || isSelf(matchers[0], matchies[randBagnum]);
                         randmBag.shift();
 
                     }
@@ -117,9 +116,308 @@ function mainRandomizer() {
             "class": "my-new-list",
             html: htmlList.join("")
         }).appendTo("#result");
-
-
-    });
 }
 
 
+// PRIMITIVE CLASS
+class Query {
+    constructor(sentence) {
+      this.sentence = sentence;
+    }
+  
+    getSentence() {
+      return this.sentence;
+    }
+  
+    getTermFrequency() {
+      let wordVector = {};
+      this.getSentence()
+        .split(" ")
+        .forEach((word) => {
+          if (!Object.keys(wordVector).includes(word)) {
+            wordVector[word] = 1;
+          } else {
+            wordVector[word]++;
+          }
+        });
+      return wordVector;
+    }
+  
+    getLength() {
+      let result = 0;
+      Object.values(this.getTermFrequency()).forEach((freq) => {
+        result += freq * freq;
+      });
+      return Math.sqrt(result);
+    }
+  }
+  
+  class Document {
+    constructor(paragraph) {
+      this.paragraph = paragraph;
+    }
+  
+    getParagraph() {
+      return this.paragraph;
+    }
+  
+    getTermFrequency() {
+      let wordVector = {};
+      this.getParagraph()
+        .split(" ")
+        .forEach((word) => {
+          if (!Object.keys(wordVector).includes(word)) {
+            wordVector[word] = 1;
+          } else {
+            wordVector[word]++;
+          }
+        });
+      return wordVector;
+    }
+  
+    getLength() {
+      let result = 0;
+      Object.values(this.getTermFrequency()).forEach((freq) => {
+        result += freq * freq;
+      });
+      return Math.sqrt(result);
+    }
+  
+    getSearchResult(Q) {
+      let wordVector = {};
+      Object.keys(Q.getTermFrequency()).forEach((word) => {
+        wordVector[word] = this.getParagraph().split(word).length - 1;
+      });
+      return wordVector;
+    }
+  }
+  
+  // PRIMITIVE FUNCTION
+  function sim(Q, D) {
+    // VECTOR SPACE MODEL
+    const vectorQ = Q.getTermFrequency();
+    const vectorD = D.getSearchResult(Q);
+  
+    let dotProduct = 0;
+  
+    for (const word in vectorQ) {
+      dotProduct += vectorQ[word] * vectorD[word];
+    }
+    return dotProduct / (Q.getLength() * D.getLength());
+  }
+  
+  // IMPLEMENTATION CLASS
+  class ToDo {
+    constructor(paragraph, prefList, aversionList) {
+      this.document = new Document(paragraph);
+      this.prefList = prefList;
+      this.aversionList = aversionList
+    }
+  
+    getDocument() {
+      return this.document;
+    }
+
+    getPrefList() {
+        return this.prefList;
+    }
+
+    getAversionList() {
+        return this.aversionList;
+    }
+  }
+  
+  class ToDoList {
+    constructor() {
+      this.listAll = [];
+    }
+  
+    append(todo) {
+        this.listAll.push(todo);
+    }
+  
+    delete(todo) {
+        this.listAll = this.listAll.filter((TD) => {
+            return (
+            TD.getDocument().getParagraph() !== todo.getDocument().getParagraph()
+            );
+        });
+    }
+  
+    getList() {
+      return this.listAll
+    }
+  
+    searchFromList(sentence) {
+      const Q = new Query(sentence);
+      const list = this.getList();
+  
+      list.sort((TD1, TD2) => {
+        return sim(Q, TD2.getDocument()) - sim(Q, TD1.getDocument());
+      });
+  
+      return list.filter((TD) => {
+        return sim(Q, TD.getDocument()) > 0;
+      });
+    }
+  }
+  
+  // OBJECT INSTANTIATION
+  const List = new ToDoList();
+  
+  // SELECTION
+  const toDoForm = document.querySelector(".to-do-form");
+  
+  const container = document.querySelector(".container");
+  
+  const firstName = document.querySelector(".fname");
+  const pref1 = document.querySelector("#pref1");
+  const pref2 = document.querySelector("#pref2");
+  const pref3 = document.querySelector("#pref3");
+  const aversion1 = document.querySelector("#aversion1");
+  const aversion2 = document.querySelector("#aversion2");
+  const aversion3 = document.querySelector("#aversion3");
+  const toDoButton = document.querySelector(".add-button");
+  
+  const toDoList = document.querySelector(".to-do-list");
+  
+  const searchInput = document.querySelector(".search-input");
+  const searchButton = document.querySelector(".search-button");
+  const clearButton = document.querySelector(".clear-button");
+  
+  // EVENT LISTENER
+  toDoButton.addEventListener("click", addToDo);
+  
+  searchButton.addEventListener("click", searchList);
+  clearButton.addEventListener("click", clearSearch);
+  
+  toDoList.addEventListener("click", deleteToDo);
+  
+  // EVENT FUNCTION
+  function clearListElement() {
+    while (toDoList.firstChild) {
+      toDoList.firstChild.remove();
+    }
+  }
+  
+  function displayList(L) {
+    L.forEach((toDo) => {
+      const toDoDiv = document.createElement("div");
+      toDoDiv.classList.add("list-item");
+  
+      const toDoElement = document.createElement("li");
+      toDoElement.classList.add("to-do-content");
+      toDoElement.textContent = toDo.getDocument().getParagraph();
+      const prefListDiv = document.createElement("div");
+      prefListDiv.textContent = "Preferences: " + toDo.getPrefList();
+      const aversionListDiv = document.createElement("div");
+      aversionListDiv.textContent = "Aversions: " + toDo.getAversionList();
+      toDoElement.appendChild(prefListDiv);
+      toDoElement.appendChild(aversionListDiv);
+      toDoDiv.appendChild(toDoElement);
+  
+      const deleteButton = document.createElement("button");
+      deleteButton.classList.add("delete-button");
+      deleteButton.textContent = "\u2715";
+      toDoDiv.appendChild(deleteButton);
+  
+      toDoList.appendChild(toDoDiv);
+    });
+  }
+  
+  function addToDo(event) {
+    event.preventDefault();
+    let prefList = [];
+    let aversionList = [];
+    if(pref1.value !== "") {
+        prefList.push(pref1.value.toUpperCase())
+    }
+    if(pref2.value !== "") {
+        prefList.push(pref2.value.toUpperCase())
+    }
+    if(pref3.value !== "") {
+        prefList.push(pref3.value.toUpperCase())
+    }
+    if(aversion1.value !== "") {
+        aversionList.push(aversion1.value.toUpperCase())
+    }
+    if(aversion2.value !== "") {
+        aversionList.push(aversion2.value.toUpperCase())
+    }
+    if(aversion3.value !== "") {
+        aversionList.push(aversion3.value.toUpperCase())
+    }
+  
+    if (firstName.value !== "") {
+      List.append(new ToDo(firstName.value.toUpperCase(), prefList, aversionList));
+
+      var personObj = {}
+      personObj["banned"] = aversionList;
+      personObj["preferences"] = prefList;
+      globalJSON[firstName.value.toUpperCase()] = personObj;
+      console.log(globalJSON);
+
+  
+      clearListElement();
+      displayList(List.getList());
+  
+      firstName.value = "";
+    }
+  }
+  
+  function deleteToDo(event) {
+    event.preventDefault();
+  
+    const item = event.target;
+  
+    if (item.classList[0] === "delete-button") {
+        delete globalJSON[item.parentElement.firstChild.textContent];
+      List.delete(
+        new ToDo(
+          item.parentElement.firstChild.textContent
+        )
+      );
+  
+      clearSearch(event);
+    }
+  }
+  
+  function searchList(event) {
+    event.preventDefault();
+  
+    if (searchInput.value !== "") {
+      clearListElement();
+  
+      if (document.querySelector(".to-do-form")) {
+        document.querySelector(".to-do-form").remove();
+      }
+      if (document.querySelector(".search-div")) {
+        document.querySelector(".search-div").remove();
+      }
+  
+      const searchDiv = document.createElement("div");
+      searchDiv.classList.add("search-div");
+  
+      const searchResult = document.createElement("span");
+      searchResult.classList.add("search-result");
+      searchResult.textContent = `Search result for \"${searchInput.value}\"`;
+      searchDiv.appendChild(searchResult);
+  
+      container.prepend(searchDiv);
+  
+      displayList(List.searchFromList(searchInput.value));
+  
+      searchInput.value = "";
+    }
+  }
+  
+  function clearSearch(event) {
+    event.preventDefault();
+  
+    container.firstChild.remove();
+    container.prepend(toDoForm);
+  
+    clearListElement();
+    displayList(List.getList());
+  }
+  
