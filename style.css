@@ -90,6 +90,15 @@
     margin-top: 0px;
     margin-bottom: 0px;
   }
+
+  footer {
+    border-radius: 5px;
+    width: 100%;
+    border: 1px solid black;
+    background-color: white;
+    flex-basis: 100px;
+    text-align: center;
+  }
   
   .search-form {
     display: flex;
@@ -159,6 +168,7 @@
     margin-top: 100px;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     justify-content: space-between;
     align-items: center;
   }

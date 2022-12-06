@@ -362,6 +362,12 @@ class Query {
       displayList(List.getList());
   
       firstName.value = "";
+      pref1.value = "";
+      pref2.value = "";
+      pref3.value = "";
+      aversion1.value = "";
+      aversion2.value = "";
+      aversion3.value = "";
     }
   }
   
