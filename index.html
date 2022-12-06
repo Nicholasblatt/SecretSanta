@@ -1,48 +1,53 @@
 <!DOCTYPE html>
 <html lang="en-US">
-    <head>
-        <title>Secret Santa</title>
-        <link rel="icon" type="image/x-icon" href="favicon.png">
-    </head>
-    <body>
-        <header>
-            <h1 class="header-logo">Secret Santa Generator</h1>
-            <form class="search-form" autocomplete="on">
-              <input class="search-input" type="text" placeholder="Search Name">
-              <button class="search-button">Search</button>
-              <button class="clear-button">Clear</button>
-            </form>
-          </header>
-          <div class="container">
-            <form class="to-do-form" autocomplete="off">
-              <input class="fname" type="text" placeholder="Name" required>
-              <p>
+
+<head>
+    <title>Secret Santa</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+</head>
+
+<body>
+    <header>
+        <h1 class="header-logo">Secret Santa Generator</h1>
+        <form class="search-form" autocomplete="on">
+            <input class="search-input" type="text" placeholder="Search Name">
+            <button class="search-button">Search</button>
+            <button class="clear-button">Clear</button>
+        </form>
+    </header>
+    <div class="container">
+        <form class="to-do-form" autocomplete="off">
+            <input class="fname" type="text" placeholder="Name" required>
+            <p>
                 <input class="pref" id="pref1" type="text" placeholder="Preference" required>
                 <input class="pref" id="pref2" type="text" placeholder="Preference" required>
                 <input class="pref" id="pref3" type="text" placeholder="Preference" required>
-              </p>
-              <p>
+            </p>
+            <p>
                 <input class="aversion" id="aversion1" type="text" placeholder="Aversion" required>
                 <input class="aversion" id="aversion2" type="text" placeholder="Aversion" required>
                 <input class="aversion" id="aversion3" type="text" placeholder="Aversion" required>
-              </p>
-              <button class="add-button">+ Add</button>
-            </form>
-            <div class="list-container">
-              <ul class="to-do-list">
-              </ul>
-            </div>
-          </div>
-        <button onclick="mainRandomizer()" class="randomizer">Randomize!</button>
-        <div id="result"></div>
-        <footer>
+            </p>
+            <button class="add-button">+ Add</button>
+        </form>
+        <div class="list-container">
+            <ul class="to-do-list">
+            </ul>
+        </div>
+    </div>
+    <button onclick="mainRandomizer()" class="randomizer">Randomize!</button>
+    <div id="result"></div>
+    <footer>
         <h3>Merry Christmas! You may enter all the names for the people who you wish to include in your Secret Santa
             <br>Preferences will allow you to greatly increase the odds of a name recieving a particular person
             <br>Aversions will similarly greatly decrease the odds of a name recieving a particular person
-            <br>Enjoy your Secret Santa this year, with some preference(Ensure names are written the same way in all locations)</h3>
-        </footer>
-    </body>
-    <script src='https://code.jquery.com/jquery-3.4.1.min.js' type='text/javascript'></script>
-    <script src='SecretSanta.js' type='text/javascript'></script>
-    <link rel="stylesheet" href="style.css">
+            <br>Enjoy your Secret Santa this year, with some preference(Ensure names are written the same way in all
+            locations)
+        </h3>
+    </footer>
+</body>
+<script src='https://code.jquery.com/jquery-3.4.1.min.js' type='text/javascript'></script>
+<script src='SecretSanta.js' type='text/javascript'></script>
+<link rel="stylesheet" href="style.css">
+
 </html>

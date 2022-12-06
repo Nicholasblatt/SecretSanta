@@ -1,75 +1,79 @@
-  *, *:before, *:after {
+*,
+*:before,
+*:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-  }
-  
-  body {
+}
+
+body {
     font-family: 'Nunito', sans-serif;
     color: #384047;
-  }
-  
-  table {
+}
+
+table {
     border: 1px solid black;
     border-radius: 5px;
     width: 75%;
     margin: 10px auto;
-  }
-  
-  caption {
+}
+
+caption {
     font-size: 1.6em;
     font-weight: 400;
     padding: 10px 0;
-  }
-  
-  thead th {
+}
+
+thead th {
     font-weight: 400;
     background: #8a97a0;
     color: #FFF;
-  }
-  
-  tr {
+}
+
+tr {
     background: #f4f7f8;
     border-bottom: 1px solid #FFF;
     margin-bottom: 5px;
-  }
-  
-  tr:nth-child(even) {
+}
+
+tr:nth-child(even) {
     background: #e8eeef;
-  }
-  
-  th, td {
+}
+
+th,
+td {
     border-radius: 5px;
     text-align: left;
     padding: 20px;
     font-weight: 300;
-  }
-  
-  tfoot tr {
+}
+
+tfoot tr {
     background: none;
-  }
-  
-  tfoot td {
+}
+
+tfoot td {
     border-radius: 25px;
     padding: 10px 2px;
     font-size: 0.8em;
     font-style: italic;
     color: #8a97a0;
-  }
-  /* GLOBAL */
+}
+
+/* GLOBAL */
 
 * {
     box-sizing: border-box;
-  }
-  
-  html {
+}
+
+html {
     font-size: 100%;
     font-family: monospace;
-  }
-  
-  /* HEADER */
-  
-  header {
+}
+
+/* HEADER */
+
+header {
     position: fixed;
     height: 60px;
     top: 0;
@@ -79,9 +83,9 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-  }
-  
-  .header-logo {
+}
+
+.header-logo {
     line-height: 40px;
     color: white;
     width: fit-content;
@@ -89,26 +93,26 @@
     margin-left: 60px;
     margin-top: 0px;
     margin-bottom: 0px;
-  }
+}
 
-  footer {
+footer {
     border-radius: 5px;
     width: 100%;
     border: 1px solid black;
     background-color: white;
     flex-basis: 100px;
     text-align: center;
-  }
-  
-  .search-form {
+}
+
+.search-form {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     margin-right: 60px;
     align-items: center;
-  }
-  
-  .search-input {
+}
+
+.search-input {
     width: 100%;
     height: 40px;
     align-items: center;
@@ -118,9 +122,9 @@
     padding: 5px;
     font-family: monospace;
     margin: 0px 5px;
-  }
-  
-  .search-button {
+}
+
+.search-button {
     width: fit-content;
     height: 35px;
     color: white;
@@ -131,16 +135,16 @@
     font-family: monospace;
     margin: 0px 5px;
     cursor: pointer;
-  }
-  
-  .search-button:hover {
+}
+
+.search-button:hover {
     transition: all 0.25s ease;
     color: black;
     background-color: white;
     border: 1px solid black;
-  }
-  
-  .clear-button {
+}
+
+.clear-button {
     width: fit-content;
     height: 35px;
     color: white;
@@ -151,18 +155,18 @@
     font-family: monospace;
     margin: 0px 5px;
     cursor: pointer;
-  }
-  
-  .clear-button:hover {
+}
+
+.clear-button:hover {
     transition: all 0.25s ease;
     color: black;
     background-color: white;
     border: 1px solid black;
-  }
-  
-  /* CONTAINER */
-  
-  .container {
+}
+
+/* CONTAINER */
+
+.container {
     width: 80%;
     margin: 0 auto;
     margin-top: 100px;
@@ -171,18 +175,18 @@
     flex-grow: 1;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  /* SEARCH BAR */
-  
-  .to-do-form {
+}
+
+/* SEARCH BAR */
+
+.to-do-form {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-  }
-  
-  .fname {
+}
+
+.fname {
     width: 100%;
     height: 50px;
     align-items: center;
@@ -192,9 +196,9 @@
     padding: 5px;
     font-family: monospace;
     margin: 0px 5px;
-  }
+}
 
-  .pref {
+.pref {
     width: 100%;
     height: 30px;
     align-items: center;
@@ -204,9 +208,9 @@
     padding: 5px;
     font-family: monospace;
     margin: 0px 5px;
-  }
+}
 
-  .aversion {
+.aversion {
     width: 100%;
     height: 30px;
     align-items: center;
@@ -216,9 +220,9 @@
     padding: 5px;
     font-family: monospace;
     margin: 0px 5px;
-  }
-  
-  .add-button {
+}
+
+.add-button {
     width: 200px;
     height: 35px;
     color: black;
@@ -229,9 +233,9 @@
     font-family: monospace;
     margin: 0px 5px;
     cursor: pointer;
-  }
+}
 
-  .randomizer{
+.randomizer {
     width: 200px;
     height: 35px;
     color: black;
@@ -242,30 +246,30 @@
     font-family: monospace;
     margin: 0px 5px;
     cursor: pointer;
-  }
-  
-  .add-button:hover {
+}
+
+.add-button:hover {
     transition: all 0.25s ease;
     color: white;
     background-color: black;
     border: 1px solid white;
-  }
-  
-  /* LIST */
-  
-  .list-container {
+}
+
+/* LIST */
+
+.list-container {
     width: 100%;
     margin: 0 auto;
-  }
-  
-  .to-do-list {
+}
+
+.to-do-list {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  .list-item {
+}
+
+.list-item {
     width: 50%;
     height: fit-content;
     padding: 25px;
@@ -277,18 +281,18 @@
     border: 1px solid black;
     border-radius: 5px;
     margin-top: 10px;
-  }
-  
-  .to-do-content {
+}
+
+.to-do-content {
     max-width: 70%;
     list-style-type: none;
     font-size: 20px;
     font-family: monospace;
     text-align: justify;
     text-justify: inter-word;
-  }
-  
-  .delete-button {
+}
+
+.delete-button {
     width: 50px;
     height: 35px;
     color: black;
@@ -299,25 +303,24 @@
     font-family: monospace;
     margin: 0px 5px;
     cursor: pointer;
-  }
-  
-  .delete-button:hover {
+}
+
+.delete-button:hover {
     transition: all 0.25s ease;
     color: white;
     background-color: black;
     border: 1px solid white;
-  }
-  
-  /* SEARCH */
-  
-  .search-div {
+}
+
+/* SEARCH */
+
+.search-div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  .search-result {
+}
+
+.search-result {
     font-size: 20px;
-  }
-  
+}
