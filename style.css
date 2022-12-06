@@ -73,11 +73,11 @@
     position: fixed;
     height: 60px;
     top: 0;
-    width: 100%;
+    width: 99%;
     background-color: black;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
   }
   
