@@ -42,6 +42,15 @@ function mainRandomizer() {
     Object.keys(globalJSON).forEach(key => {
         namelist.push(key);
     });
+    if(namelist.length < 3){
+        $("#result").empty();
+
+        $("<div/>", {
+            "class": "error-message",
+            html: "<p class=\"error-text\">Must have at least 3 names entered to randomize</p>"
+        }).appendTo("#result");
+        return;
+    }
 
     shuffle(namelist);
 
@@ -118,40 +127,6 @@ function mainRandomizer() {
     }).appendTo("#result");
 }
 
-
-// PRIMITIVE CLASS
-class Query {
-    constructor(sentence) {
-        this.sentence = sentence;
-    }
-
-    getSentence() {
-        return this.sentence;
-    }
-
-    getTermFrequency() {
-        let wordVector = {};
-        this.getSentence()
-            .split(" ")
-            .forEach((word) => {
-                if (!Object.keys(wordVector).includes(word)) {
-                    wordVector[word] = 1;
-                } else {
-                    wordVector[word]++;
-                }
-            });
-        return wordVector;
-    }
-
-    getLength() {
-        let result = 0;
-        Object.values(this.getTermFrequency()).forEach((freq) => {
-            result += freq * freq;
-        });
-        return Math.sqrt(result);
-    }
-}
-
 class Document {
     constructor(paragraph) {
         this.paragraph = paragraph;
@@ -182,28 +157,6 @@ class Document {
         });
         return Math.sqrt(result);
     }
-
-    getSearchResult(Q) {
-        let wordVector = {};
-        Object.keys(Q.getTermFrequency()).forEach((word) => {
-            wordVector[word] = this.getParagraph().split(word).length - 1;
-        });
-        return wordVector;
-    }
-}
-
-// PRIMITIVE FUNCTION
-function sim(Q, D) {
-    // VECTOR SPACE MODEL
-    const vectorQ = Q.getTermFrequency();
-    const vectorD = D.getSearchResult(Q);
-
-    let dotProduct = 0;
-
-    for (const word in vectorQ) {
-        dotProduct += vectorQ[word] * vectorD[word];
-    }
-    return dotProduct / (Q.getLength() * D.getLength());
 }
 
 // IMPLEMENTATION CLASS
@@ -247,19 +200,6 @@ class ToDoList {
     getList() {
         return this.listAll
     }
-
-    searchFromList(sentence) {
-        const Q = new Query(sentence);
-        const list = this.getList();
-
-        list.sort((TD1, TD2) => {
-            return sim(Q, TD2.getDocument()) - sim(Q, TD1.getDocument());
-        });
-
-        return list.filter((TD) => {
-            return sim(Q, TD.getDocument()) > 0;
-        });
-    }
 }
 
 // OBJECT INSTANTIATION
@@ -281,15 +221,9 @@ const toDoButton = document.querySelector(".add-button");
 
 const toDoList = document.querySelector(".to-do-list");
 
-const searchInput = document.querySelector(".search-input");
-const searchButton = document.querySelector(".search-button");
-const clearButton = document.querySelector(".clear-button");
 
 // EVENT LISTENER
 toDoButton.addEventListener("click", addToDo);
-
-searchButton.addEventListener("click", searchList);
-clearButton.addEventListener("click", clearSearch);
 
 toDoList.addEventListener("click", deleteToDo);
 
@@ -389,40 +323,12 @@ function deleteToDo(event) {
             )
         );
 
-        clearSearch(event);
+        clearEvent(event);
     }
 }
 
-function searchList(event) {
-    event.preventDefault();
 
-    if (searchInput.value !== "") {
-        clearListElement();
-
-        if (document.querySelector(".to-do-form")) {
-            document.querySelector(".to-do-form").remove();
-        }
-        if (document.querySelector(".search-div")) {
-            document.querySelector(".search-div").remove();
-        }
-
-        const searchDiv = document.createElement("div");
-        searchDiv.classList.add("search-div");
-
-        const searchResult = document.createElement("span");
-        searchResult.classList.add("search-result");
-        searchResult.textContent = `Search result for \"${searchInput.value}\"`;
-        searchDiv.appendChild(searchResult);
-
-        container.prepend(searchDiv);
-
-        displayList(List.searchFromList(searchInput.value));
-
-        searchInput.value = "";
-    }
-}
-
-function clearSearch(event) {
+function clearEvent(event) {
     event.preventDefault();
 
     container.firstChild.remove();
