@@ -201,14 +201,6 @@ footer {
     cursor: pointer;
 }
 
-.randomizer-container {
-    margin: 0;
-    position: absolute;
-    top: 20%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-}
-
 .add-button:hover {
     transition: all 0.25s ease;
     color: white;
