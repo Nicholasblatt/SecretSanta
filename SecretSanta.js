@@ -371,10 +371,15 @@ class Query {
     const item = event.target;
   
     if (item.classList[0] === "delete-button") {
-        delete globalJSON[item.parentElement.firstChild.textContent];
+        let currentName = item.parentElement.firstChild.textContent;
+        if(currentName.includes("Preferences")){
+            let index = currentName.indexOf("Preferences");
+            currentName = currentName.substr(0,index);
+        }
+        delete globalJSON[currentName];
       List.delete(
         new ToDo(
-          item.parentElement.firstChild.textContent
+          currentName
         )
       );
   

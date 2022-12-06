@@ -1,13 +1,61 @@
-table {
-    width: 50%;
-    border-collapse: collapse;
-    border: 1px solid black;
-}
-
-tr:nth-child(odd) {
-    background: lightgray;
+  *, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
   }
-
+  
+  body {
+    font-family: 'Nunito', sans-serif;
+    color: #384047;
+  }
+  
+  table {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 75%;
+    margin: 10px auto;
+  }
+  
+  caption {
+    font-size: 1.6em;
+    font-weight: 400;
+    padding: 10px 0;
+  }
+  
+  thead th {
+    font-weight: 400;
+    background: #8a97a0;
+    color: #FFF;
+  }
+  
+  tr {
+    background: #f4f7f8;
+    border-bottom: 1px solid #FFF;
+    margin-bottom: 5px;
+  }
+  
+  tr:nth-child(even) {
+    background: #e8eeef;
+  }
+  
+  th, td {
+    border-radius: 5px;
+    text-align: left;
+    padding: 20px;
+    font-weight: 300;
+  }
+  
+  tfoot tr {
+    background: none;
+  }
+  
+  tfoot td {
+    border-radius: 25px;
+    padding: 10px 2px;
+    font-size: 0.8em;
+    font-style: italic;
+    color: #8a97a0;
+  }
   /* GLOBAL */
 
 * {
@@ -17,11 +65,6 @@ tr:nth-child(odd) {
   html {
     font-size: 100%;
     font-family: monospace;
-  }
-  
-  body {
-    overflow: scroll;
-    margin: 0;
   }
   
   /* HEADER */
@@ -166,6 +209,19 @@ tr:nth-child(odd) {
   }
   
   .add-button {
+    width: 200px;
+    height: 35px;
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: monospace;
+    margin: 0px 5px;
+    cursor: pointer;
+  }
+
+  .randomizer{
     width: 200px;
     height: 35px;
     color: black;
