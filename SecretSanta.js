@@ -71,14 +71,20 @@ function mainRandomizer() {
             var impossible = true;
             var indicator = true;
             var randmBag = [];
-            preferencelist = (globalJSON[matchers[0]].preferences).slice();
+            const currentMatcher = matchers[0];
+            const matchiesWithoutMatcher = matchies.slice();
+            const index = matchiesWithoutMatcher.indexOf(currentMatcher);
+            if (index !== -1) {
+                matchiesWithoutMatcher.splice(index, 1);
+            }
+            preferencelist = (globalJSON[currentMatcher].preferences).slice();
             shuffle(preferencelist);
             while (preferencelist.length > 0 && indicator) {
-                if (matchies.includes(preferencelist[0])) {
-                    const myind = matchies.indexOf(preferencelist[0]);
-                    matchesmade.push([matchers[0], matchies[myind]]);
+                if (matchiesWithoutMatcher.includes(preferencelist[0])) {
+                    const myind = matchiesWithoutMatcher.indexOf(preferencelist[0]);
+                    matchesmade.push([currentMatcher, matchiesWithoutMatcher[myind]]);
                     matchers.shift();
-                    matchies.splice(myind, 1);
+                    matchiesWithoutMatcher.splice(myind, 1);
                     indicator = false;
                 }
                 else {
@@ -88,7 +94,7 @@ function mainRandomizer() {
 
             if (preferencelist.length === 0) {
                 randmBag.empty;
-                for (var i = 0; i < matchies.length; i++) {
+                for (var i = 0; i < matchiesWithoutMatcher.length; i++) {
                     randmBag.push(i);
                 }
 
@@ -97,19 +103,21 @@ function mainRandomizer() {
 
                     randBagnum = randmBag[0];
 
-                    impossible = (isbanned(globalJSON[matchers[0]], matchies[randBagnum])) || isSelf(matchers[0], matchies[randBagnum]);
+                    impossible = (isbanned(globalJSON[currentMatcher], matchiesWithoutMatcher[randBagnum])) || isSelf(currentMatcher, matchiesWithoutMatcher[randBagnum]);
                     randmBag.shift();
 
                 }
-                matchesmade.push([matchers[0], matchies[randBagnum]]);
+                matchesmade.push([currentMatcher, matchiesWithoutMatcher[randBagnum]]);
                 matchers.shift();
-                matchies.splice(randBagnum, 1);
+                const matchIndex = matchies.indexOf(matchiesWithoutMatcher[randBagnum]);
+                matchies.splice(matchIndex, 1);
             }
-
         }
 
-        if (randmBag.length === 0) {
+        if (randmBag.length === 0 && matchesmade[matchesmade.length - 1][1]) {
             notcomplete = false;
+        } else {
+            matchesmade = [];
         }
     }
 
