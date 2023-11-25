@@ -16,7 +16,7 @@ const bodyInnerHTML = `<header>
         <input class="aversion" id="aversion2" type="text" placeholder="Aversion" required>
         <input class="aversion" id="aversion3" type="text" placeholder="Aversion" required>
     </p>
-    <button class="add-button">+ Add</button>
+    <button class="add-button">+Add</button>
 </form>
 <div class="list-container">
     <ul class="to-do-list">
