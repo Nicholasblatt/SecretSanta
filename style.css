@@ -275,3 +275,8 @@ footer {
     width: 20px;
     height: 20px;
 }
+
+a {
+    color: blue; /* Or any color you prefer */
+    text-decoration: none; /* Optional: removes underline */
+}
