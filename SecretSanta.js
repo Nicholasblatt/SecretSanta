@@ -1,5 +1,43 @@
 var globalJSON = {};
 
+const bodyInnerHTML = `<header>
+<h1 class="header-logo">Secret Santa Generator</h1>
+</header>
+<div class="container">
+<form class="to-do-form" autocomplete="off">
+    <input class="fname" type="text" placeholder="Name" required>
+    <p>
+        <input class="pref" id="pref1" type="text" placeholder="Preference" required>
+        <input class="pref" id="pref2" type="text" placeholder="Preference" required>
+        <input class="pref" id="pref3" type="text" placeholder="Preference" required>
+    </p>
+    <p>
+        <input class="aversion" id="aversion1" type="text" placeholder="Aversion" required>
+        <input class="aversion" id="aversion2" type="text" placeholder="Aversion" required>
+        <input class="aversion" id="aversion3" type="text" placeholder="Aversion" required>
+    </p>
+    <button class="add-button">+ Add</button>
+</form>
+<div class="list-container">
+    <ul class="to-do-list">
+    </ul>
+</div>
+</div>
+<div class="randomizer-container">
+<button onclick="mainRandomizer()" class="randomizer">Randomize!</button>
+</div>
+<div id="result"></div>
+<footer>
+<h3>Merry Christmas! You may enter all the names for the people who you wish to include in your Secret Santa
+    <br>Preferences will allow you to greatly increase the odds of a name recieving a particular person
+    <br>Aversions will similarly greatly decrease the odds of a name recieving a particular person
+    <br>Enjoy your Secret Santa this year, with some preference(Ensure names are written the same way in all
+    locations)
+</h3>
+</footer>`
+
+document.body.innerHTML = bodyInnerHTML;
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -33,9 +71,25 @@ function isSelf(name1, name2) {
     return false;
 }
 
+function getBuyForLink(matchesElement) {
+    const encryptedName = encryptName(matchesElement);
+    const encodedName = encodeURIComponent(encryptedName);
 
+    // Construct the new URL with the encrypted and encoded parameter
+    const currentUrl = window.location.href;
+    const newUrl = currentUrl.includes('?') ? currentUrl + '&name=' + encodedName : currentUrl + '?name=' + encodedName;
 
+    return newUrl;
+}
 
+function copyToClipboard(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+}
 
 function mainRandomizer() {
     var namelist = [];
@@ -82,7 +136,7 @@ function mainRandomizer() {
             while (preferencelist.length > 0 && indicator) {
                 if (matchiesWithoutMatcher.includes(preferencelist[0])) {
                     const myind = matchiesWithoutMatcher.indexOf(preferencelist[0]);
-                    matchesmade.push([currentMatcher, matchiesWithoutMatcher[myind]]);
+                    matchesmade.push([currentMatcher, matchiesWithoutMatcher[myind], false]);
                     matchers.shift();
                     matchiesWithoutMatcher.splice(myind, 1);
                     indicator = false;
@@ -107,7 +161,7 @@ function mainRandomizer() {
                     randmBag.shift();
 
                 }
-                matchesmade.push([currentMatcher, matchiesWithoutMatcher[randBagnum]]);
+                matchesmade.push([currentMatcher, matchiesWithoutMatcher[randBagnum], false]);
                 matchers.shift();
                 const matchIndex = matchies.indexOf(matchiesWithoutMatcher[randBagnum]);
                 matchies.splice(matchIndex, 1);
@@ -124,7 +178,19 @@ function mainRandomizer() {
     var htmlList = []
 
     for (var i = 0; i < matchesmade.length; i++) {
-        htmlList.push("<tr><td>" + matchesmade[i][0] + "</td><td> buys for -> </td><td>" + matchesmade[i][1] + "</td></tr>");
+        const link = getBuyForLink(matchesmade[i][1]);
+        htmlList.push(
+            `<tr>
+                <td>${matchesmade[i][0]}</td>
+                <td> buys for -> </td>
+                <td>
+                    <a href="${link}">Name Link Here</a>
+                    <button onclick="copyToClipboard('${link}')" class="copy-button">
+                        <img src="copyIcon.png" alt="Copy" class="copy-icon"/>
+                    </button>
+                </td>
+            </tr>`
+        );
     }
 
     $("#result").empty();
