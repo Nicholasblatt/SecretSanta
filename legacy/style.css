@@ -1,0 +1,423 @@
+*,
+*:before,
+*:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    color: #384047;
+    background-image: url('./background.jpg'); /* Path to your image */
+    background-size: cover; /* Cover the entire page */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-attachment: fixed; /* Fix the background image */
+}
+
+table {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 75%;
+    margin: 10px auto;
+}
+
+caption {
+    font-size: 1.6em;
+    font-weight: 400;
+    padding: 10px 0;
+}
+
+thead th {
+    font-weight: 400;
+    background: #8a97a0;
+    color: #FFF;
+}
+
+tr {
+    background: white;
+    border-bottom: 1px solid #FFF;
+    margin-bottom: 5px;
+}
+
+tr:nth-child(even) {
+    background-image: linear-gradient(
+        45deg, /* Angle of the gradient */
+        #f47373 25%, /* Red stripe */
+        #FFFFFF 25%, /* White stripe starts */
+        #FFFFFF 50%, /* White stripe ends */
+        #f47373 50%, /* Next red stripe starts */
+        #f47373 75%, /* Red stripe ends */
+        #FFFFFF 75%  /* White for the rest */
+    );
+    background-size: 40px 40px; /* The size of the stripes */
+}
+
+th,
+td {
+    border-radius: 5px;
+    text-align: center;
+    padding: 20px;
+    font-weight: 700;
+}
+
+.td-styling {
+    background-color: white;
+    border-radius: 4px;
+    padding: 5px 10px; /* Reduce the top and bottom padding, adjust left and right as needed */
+    text-align: center; /* Center the text if not already centered */
+    display: inline-block; /* This will shrink the background to fit the content */
+    margin: 0 auto; /* Center the td content in the table cell if desired */
+}
+
+tfoot tr {
+    background: none;
+}
+
+tfoot td {
+    border-radius: 25px;
+    padding: 10px 2px;
+    font-size: 0.8em;
+    font-style: italic;
+    color: #8a97a0;
+}
+
+/* GLOBAL */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+    font-family: monospace;
+}
+
+/* HEADER */
+
+header {
+    height: 60px;
+    top: 0;
+    width: 100%;
+    color: black;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-logo {
+    line-height: 40px;
+    color: black;
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); /* Adds a slight shadow around the white background */
+}
+
+footer {
+    border-radius: 5px;
+    width: 100%;
+    background-color: #f4dfc1;
+    border: 8px solid transparent; /* The border width should be set */
+    border-image: linear-gradient(
+            45deg, /* Angle of the gradient */
+            #f47373 25%, /* Red stripe */
+            #FFFFFF 25%, /* White stripe starts */
+            #FFFFFF 50%, /* White stripe ends */
+            #f47373 50%, /* Next red stripe starts */
+            #f47373 75%, /* Red stripe ends */
+            #FFFFFF 75%  /* White for the rest */
+    ) 100 round; /* The '1' value scales the gradient to fit the border. 'round' repeats the gradient for each side */
+    flex-basis: 100px;
+    text-align: center;
+}
+
+.footer-main-text {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.flag-button {
+    width: 50px; /* Adjust the width as needed */
+    height: 50px; /* Adjust the height as needed */
+    padding: 5px;
+    border: none;
+    background: transparent;
+}
+
+.flag-button img {
+    width: 100%;
+    height: auto;
+}
+/* CONTAINER */
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.to-do-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.fname {
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 5px;
+    font-family: monospace;
+    margin: 0px 5px;
+}
+
+.pref {
+    width: 100%;
+    height: 40px;
+    align-items: center;
+    background-color: white;
+    border-radius: 3px;
+    font-size: 15px;
+    padding: 5px;
+    font-family: monospace;
+}
+
+.aversion {
+    width: 100%;
+    height: 40px;
+    align-items: center;
+    background-color: white;
+    border-radius: 3px;
+    font-size: 15px;
+    padding: 5px;
+    font-family: monospace;
+}
+
+.add-button {
+    width: 200px;
+    height: 35px;
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: monospace;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+.add-button:hover {
+    transition: all 0.25s ease;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+}
+
+/* .pref-aversion-button {
+    width: 200px;
+    height: 35px;
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: monospace;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+.pref-aversion-button:hover {
+    transition: all 0.25s ease;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+} */
+
+.error-message {
+    background-color: #fce4e4;
+    border: 1px solid #fcc2c3;
+    padding: 20px 30px;
+}
+
+.error-text {
+    color: #cc0033;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 20px;
+    text-shadow: 1px 1px rgba(250, 250, 250, .3);
+}
+
+.randomizer-container {
+    display: flex;
+    justify-content: center; /* This will center the button in the container */
+}
+
+.randomizer {
+    width: 200px;
+    height: 35px;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.0);
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: monospace;
+    display: block; /* Make the button a block-level element if it's not already */
+    margin: 0 auto; /* This will give automatic margins on the left and right, centering the button */
+    cursor: pointer;
+}
+
+.randomizer:active {
+    background-color: #f47373; /* Change to a different color when clicked */
+    color: white; /* Change text color for better visibility */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); /* Add an inset shadow for a pressed effect */
+    transform: scale(0.98); /* Slightly scale down the button to mimic a pressing effect */
+}
+
+/* LIST */
+
+.list-container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.to-do-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Increase the min size to fit content */
+    grid-auto-rows: minmax(100px, auto); /* Adjust row height as needed */
+    gap: 20px;
+    padding: 20px;
+    list-style: none;
+    margin: 0;
+    width: 100%; /* Ensure the grid takes full width of its container */
+}
+
+.list-item {
+    width: 100%;
+    height: fit-content;
+    padding: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* Other styles... */
+    background-image: linear-gradient(
+        45deg, /* Angle of the gradient */
+        #f47373 25%, /* Red stripe */
+        #FFFFFF 25%, /* White stripe starts */
+        #FFFFFF 50%, /* White stripe ends */
+        #f47373 50%, /* Next red stripe starts */
+        #f47373 75%, /* Red stripe ends */
+        #FFFFFF 75%  /* White for the rest */
+    );
+    background-size: 40px 40px; /* The size of the stripes */
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.to-do-content {
+    max-width: 70%;
+    list-style-type: none;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: monospace;
+    text-align: justify;
+    text-justify: inter-word;
+    background-color: white;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); /* Adds a slight shadow around the white background */
+}
+
+.delete-button {
+    width: 50px;
+    height: 35px;
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: monospace;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    transition: all 0.25s ease;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+}
+
+.resultName {
+    display: flex;
+    height: 100vh;
+    font-size: 7vw;
+    align-items: center;
+    justify-content: center;
+}
+
+.copy-icon {
+    width: 20px;
+    height: 20px;
+}
+
+a {
+    color: blue; /* Or any color you prefer */
+    text-decoration: none; /* Optional: removes underline */
+}
+
+@media only screen and (max-width: 600px) {
+    /* This targets screens with a width of 600px or less */
+    
+    .to-do-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Create two columns */
+        grid-gap: 10px; /* Adjust the gap as needed */
+        align-items: center;
+    }
+    
+    .pref, .aversion {
+        width: 100%; /* Set width to 100% of the grid column */
+        margin: 5px 0; /* Adjust margin as needed */
+    }
+    
+    /* Additional styles for your form elements to ensure they fit within the grid */
+    .fname, .add-button {
+        grid-column: 1 / -1; /* Span the full width of the grid */
+        margin: 5px 0; /* Adjust margin as needed */
+    }
+}
+
+@media only screen and (max-width: 435px) {
+
+    header {
+        height: 100px;
+    }
+}
+
+@media only screen and (max-width: 272px) {
+
+    header {
+        height: 150px;
+    }
+}
+
