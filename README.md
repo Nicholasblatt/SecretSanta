@@ -45,7 +45,7 @@ Google Fonts supplies DM Sans and Libre Caslon Display, with system and Georgia 
 
 ## Firebase deployment
 
-The existing project and hosting site are both `ssproj-770af`. `.firebaserc` and `firebase.json` explicitly target this site. Only the build output in `dist/` is published, with revalidation on each request so existing links load the current app.
+The existing project and hosting site are both `ssproj-770af`. `.firebaserc` and `firebase.json` explicitly target this site. Only the build output in `dist/` is published, with revalidation on each request. Builds version the script, stylesheet, and imported module URLs so old browser caches cannot mix the previous site with the new app.
 
 ```sh
 firebase login
