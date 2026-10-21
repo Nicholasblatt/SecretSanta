@@ -20,6 +20,16 @@ export const translations = {
     addTitle: "Who’s joining?",
     name: "Name",
     namePlaceholder: "e.g. Ana Silva",
+    email: "Email address",
+    emailPlaceholder: "e.g. ana@example.com",
+    emailOptional: "Email address (optional)",
+    emailFor: "Email address for {name}",
+    emailLink: "Email link",
+    emailHelp:
+      "Opens a ready-to-send email in your email app (Gmail if it’s your default). You review and send it.",
+    emailSubject: "Your Secret Santa surprise 🎁",
+    emailBody:
+      "Hi {name},\n\nYour Secret Santa draw is ready! Open your personal link to reveal who you’re buying a gift for:\n\n{link}\n\nKeep it a secret until the celebration. Merry Christmas!",
     add: "Add person",
     save: "Save changes",
     cancel: "Cancel",
@@ -149,6 +159,16 @@ export const translations = {
     addTitle: "Quem vai participar?",
     name: "Nome",
     namePlaceholder: "Ex.: Ana Silva",
+    email: "E-mail",
+    emailPlaceholder: "Ex.: ana@example.com",
+    emailOptional: "E-mail (opcional)",
+    emailFor: "E-mail de {name}",
+    emailLink: "Enviar link por e-mail",
+    emailHelp:
+      "Abre uma mensagem pronta no seu aplicativo de e-mail (Gmail, se for o padrão). Você revisa e envia.",
+    emailSubject: "Seu amigo secreto de Natal 🎁",
+    emailBody:
+      "Olá, {name}!\n\nO sorteio do amigo secreto está pronto! Abra seu link pessoal para descobrir quem você vai presentear:\n\n{link}\n\nGuarde o segredo até a celebração. Feliz Natal!",
     add: "Adicionar pessoa",
     save: "Salvar alterações",
     cancel: "Cancelar",

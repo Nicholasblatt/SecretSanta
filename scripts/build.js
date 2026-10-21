@@ -6,6 +6,7 @@ const files = [
   "style.css",
   "SecretSanta.js",
   "draw.js",
+  "email.js",
   "translations.js",
   "parseQueryParams.js",
   "gift.svg",

@@ -1,5 +1,6 @@
 import { drawNames, normalize, parseRules } from "./draw.js";
 import { translations } from "./translations.js";
+import { createEmailLink, isValidEmail } from "./email.js";
 import { createGiftLink, readGiftLink } from "./parseQueryParams.js";
 
 const $ = (selector) => document.querySelector(selector);
@@ -26,6 +27,7 @@ const icons = {
   chevron: '<path d="m6 9 6 6 6-6"/>',
   heart:
     '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/>',
   back: '<path d="M20 12H4m6-6-6 6 6 6"/>',
 };
 const icon = (name, cls = "") =>
@@ -58,6 +60,10 @@ let people = Array.isArray(stored?.people)
           typeof p.aversions === "string",
       )
       .slice(0, 100)
+      .map((p) => ({
+        ...p,
+        email: typeof p.email === "string" ? p.email.slice(0, 254) : "",
+      }))
   : [];
 let results =
   Array.isArray(stored?.results) && stored.results.length === people.length
@@ -76,7 +82,7 @@ let results =
 if (results.length !== people.length) results = [];
 let view = results.length ? "results" : "group";
 let editing = null,
-  formDraft = { name: "", preferences: "", aversions: "" },
+  formDraft = { name: "", email: "", preferences: "", aversions: "" },
   rulesOpen = false;
 let error = null,
   busy = false,
@@ -126,10 +132,10 @@ function participant(person, i) {
       .map((n) => [...n][0])
       .slice(0, 2)
       .join(""),
-  )}</span><div class="person-info"><strong>${esc(person.name)}</strong><div class="person-rules">${person.preferences ? `<span>${icon("heart")} ${t("prefers")}: ${esc(person.preferences)}</span>` : ""}${person.aversions ? `<span>${icon("lock")} ${t("avoids")}: ${esc(person.aversions)}</span>` : ""}${!person.preferences && !person.aversions ? `<span>${t("noRules")}</span>` : ""}</div></div><div class="row-actions"><button class="icon-button" data-action="edit" data-id="${esc(person.id)}" aria-label="${t("edit")} ${esc(person.name)}" title="${t("edit")}">${icon("edit")}</button><button class="icon-button remove" data-action="remove" data-id="${esc(person.id)}" aria-label="${t("remove")} ${esc(person.name)}" title="${t("remove")}">${icon("trash")}</button></div></li>`;
+  )}</span><div class="person-info"><strong>${esc(person.name)}</strong>${person.email ? `<span class="person-email">${esc(person.email)}</span>` : ""}<div class="person-rules">${person.preferences ? `<span>${icon("heart")} ${t("prefers")}: ${esc(person.preferences)}</span>` : ""}${person.aversions ? `<span>${icon("lock")} ${t("avoids")}: ${esc(person.aversions)}</span>` : ""}${!person.preferences && !person.aversions ? `<span>${t("noRules")}</span>` : ""}</div></div><div class="row-actions"><button class="icon-button" data-action="edit" data-id="${esc(person.id)}" aria-label="${t("edit")} ${esc(person.name)}" title="${t("edit")}">${icon("edit")}</button><button class="icon-button remove" data-action="remove" data-id="${esc(person.id)}" aria-label="${t("remove")} ${esc(person.name)}" title="${t("remove")}">${icon("trash")}</button></div></li>`;
 }
 function group() {
-  return `<div class="group-layout"><aside class="add-panel"><div class="panel-title"><span class="mini-icon">${icon("plus")}</span><h3>${t("addTitle")}</h3></div><form id="person-form" autocomplete="off"><label for="person-name">${t("name")}</label><input id="person-name" name="name" value="${esc(formDraft.name)}" placeholder="${t("namePlaceholder")}" maxlength="80" required><details class="matching-rules" ${rulesOpen ? "open" : ""}><summary>${t("rules")}<span>${t("optional")}</span>${icon("chevron")}</summary><div class="rules-fields"><p>${t("rulesHelp")}</p><label for="preferences">${t("preferences")}</label><input id="preferences" name="preferences" value="${esc(formDraft.preferences)}" placeholder="${t("prefPlaceholder")}" maxlength="1000" list="participant-names"><small>${t("preferredHelp")}</small><label for="aversions">${t("aversions")}</label><input id="aversions" name="aversions" value="${esc(formDraft.aversions)}" placeholder="${t("aversionPlaceholder")}" maxlength="1000" list="participant-names"><small>${t("excludedHelp")}</small></div></details><datalist id="participant-names">${people
+  return `<div class="group-layout"><aside class="add-panel"><div class="panel-title"><span class="mini-icon">${icon("plus")}</span><h3>${t("addTitle")}</h3></div><form id="person-form" autocomplete="off"><label for="person-name">${t("name")}</label><input id="person-name" name="name" value="${esc(formDraft.name)}" placeholder="${t("namePlaceholder")}" maxlength="80" required><label class="email-field-label" for="person-email">${t("email")} <span>${t("optional")}</span></label><input id="person-email" name="email" type="email" inputmode="email" value="${esc(formDraft.email)}" placeholder="${t("emailPlaceholder")}" maxlength="254"><details class="matching-rules" ${rulesOpen ? "open" : ""}><summary>${t("rules")}<span>${t("optional")}</span>${icon("chevron")}</summary><div class="rules-fields"><p>${t("rulesHelp")}</p><label for="preferences">${t("preferences")}</label><input id="preferences" name="preferences" value="${esc(formDraft.preferences)}" placeholder="${t("prefPlaceholder")}" maxlength="1000" list="participant-names"><small>${t("preferredHelp")}</small><label for="aversions">${t("aversions")}</label><input id="aversions" name="aversions" value="${esc(formDraft.aversions)}" placeholder="${t("aversionPlaceholder")}" maxlength="1000" list="participant-names"><small>${t("excludedHelp")}</small></div></details><datalist id="participant-names">${people
     .filter((p) => p.id !== editing)
     .map((p) => `<option value="${esc(p.name)}"></option>`)
     .join(
@@ -138,19 +144,26 @@ function group() {
 }
 function resultList() {
   return `<section class="results-panel"><div class="results-heading"><span class="result-seal">${icon("check")}</span><div><h3>${t("resultsTitle")}</h3><p>${t("resultsIntro")}</p></div></div><ul class="results-list">${results
-    .map(
-      (r, i) =>
-        `<li class="result-row"><span class="avatar avatar-${i % 4}">${esc(
-          r.giver
-            .split(" ")
-            .map((n) => [...n][0])
-            .slice(0, 2)
-            .join(""),
-        )}</span><div class="person-info"><small>${t("resultLabel")}</small><strong>${esc(r.giver)}</strong></div><button class="button copy-button" data-action="copy" data-index="${i}" aria-label="${t("copy")} — ${esc(r.giver)}">${icon("copy")}<span>${t("copy")}</span></button></li>`,
-    )
+    .map((r, i) => {
+      const person = people.find((p) => p.name === r.giver);
+      const email = person?.email || "";
+      const mailto = createEmailLink({
+        email: isValidEmail(email) ? email : "",
+        name: r.giver,
+        link: localizedLink(r.url),
+        language,
+      });
+      return `<li class="result-row"><span class="avatar avatar-${i % 4}">${esc(
+        r.giver
+          .split(" ")
+          .map((n) => [...n][0])
+          .slice(0, 2)
+          .join(""),
+      )}</span><div class="person-info"><small>${t("resultLabel")}</small><strong>${esc(r.giver)}</strong></div><div class="result-share"><input class="result-email" type="email" inputmode="email" maxlength="254" data-email-index="${i}" value="${esc(email)}" placeholder="${t("emailOptional")}" aria-label="${esc(t("emailFor", { name: r.giver }))}"><div class="result-share-actions"><button class="button copy-button" data-action="copy" data-index="${i}" aria-label="${t("copy")} — ${esc(r.giver)}">${icon("copy")}<span>${t("copy")}</span></button><a class="button secondary email-button" data-action="email" data-index="${i}" href="${esc(mailto)}" aria-label="${t("emailLink")} — ${esc(r.giver)}">${icon("mail")}<span>${t("emailLink")}</span></a></div></div></li>`;
+    })
     .join(
       "",
-    )}</ul><p class="link-note">${icon("lock")}${t("linkNote")}</p><div class="results-actions"><button class="text-button" data-action="redraw">${icon("sparkle")}${t("redraw")}</button><button class="button secondary" data-action="copy-all">${icon("copy")}${t("copyAll")}</button></div></section>`;
+    )}</ul><p class="email-help">${icon("mail")}${t("emailHelp")}</p><p class="link-note">${icon("lock")}${t("linkNote")}</p><div class="results-actions"><button class="text-button" data-action="redraw">${icon("sparkle")}${t("redraw")}</button><button class="button secondary" data-action="copy-all">${icon("copy")}${t("copyAll")}</button></div></section>`;
 }
 function workspace() {
   return `<section class="workspace" id="exchange" aria-labelledby="workspace-heading"><div class="workspace-heading"><div><h2 id="workspace-heading">${t("workspace")}</h2><p>${t("workspaceSub")}</p></div>${people.length ? `<button class="text-button reset-button" data-action="reset">${t("startOver")}</button>` : `<span class="workspace-sparkle" aria-hidden="true">✧</span>`}</div>${results.length ? `<div class="view-tabs"><button data-action="group" aria-pressed="${view === "group"}">${icon("users")}${t("showGroup")}</button><button data-action="results" aria-pressed="${view === "results"}">${icon("gift")}${t("shareTab")}<span>${results.length}</span></button></div>` : ""}<div id="form-error" class="form-error" role="alert" tabindex="-1" ${!error ? "hidden" : ""}>${error ? esc(t(error.code, error)) : ""}</div>${view === "results" && results.length ? resultList() : group()}</section>`;
@@ -198,7 +211,7 @@ function mutate(action) {
 }
 function clearForm() {
   editing = null;
-  formDraft = { name: "", preferences: "", aversions: "" };
+  formDraft = { name: "", email: "", preferences: "", aversions: "" };
   rulesOpen = false;
 }
 async function doDraw() {
@@ -264,6 +277,25 @@ async function copy(text, button, all = false) {
   }
 }
 $("#app").addEventListener("input", (event) => {
+  if (event.target.matches(".result-email")) {
+    const index = Number(event.target.dataset.emailIndex);
+    const result = results[index];
+    const person = people.find((p) => p.name === result.giver);
+    const email = event.target.value.trim();
+    if (person) {
+      person.email = email;
+      persist();
+    }
+    if (event.target.validity.valid && isValidEmail(email)) {
+      event.target.closest(".result-row").querySelector(".email-button").href =
+        createEmailLink({
+          email,
+          name: result.giver,
+          link: localizedLink(result.url),
+          language,
+        });
+    }
+  }
   if (
     event.target.closest("#person-form") &&
     Object.hasOwn(formDraft, event.target.name)
@@ -311,6 +343,7 @@ $("#app").addEventListener("submit", (event) => {
     const person = {
       id: editing || crypto.randomUUID(),
       name,
+      email: formDraft.email.trim(),
       preferences: formDraft.preferences.trim(),
       aversions: formDraft.aversions.trim(),
     };
@@ -324,7 +357,14 @@ $("#app").addEventListener("submit", (event) => {
     $("#person-name").focus();
     toast(message);
   };
-  mutate(save);
+  const existing = people.find((p) => p.id === editing);
+  const onlyContactChanged =
+    existing &&
+    existing.name === name &&
+    existing.preferences === formDraft.preferences.trim() &&
+    existing.aversions === formDraft.aversions.trim();
+  if (onlyContactChanged) save();
+  else mutate(save);
 });
 $("#app").addEventListener("click", (event) => {
   const button = event.target.closest("[data-action]");
@@ -348,6 +388,7 @@ $("#app").addEventListener("click", (event) => {
     editing = p.id;
     formDraft = {
       name: p.name,
+      email: p.email || "",
       preferences: p.preferences,
       aversions: p.aversions,
     };
@@ -391,6 +432,13 @@ $("#app").addEventListener("click", (event) => {
       render();
       toast(t("cleared"));
     });
+  if (action === "email") {
+    const input = button.closest(".result-row").querySelector(".result-email");
+    if (!input.reportValidity() || !isValidEmail(input.value.trim())) {
+      event.preventDefault();
+      input.focus();
+    }
+  }
   if (action === "copy")
     copy(localizedLink(results[Number(button.dataset.index)].url), button);
   if (action === "copy-all")

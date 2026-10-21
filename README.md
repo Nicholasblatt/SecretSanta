@@ -7,11 +7,11 @@ A bilingual, mobile-friendly family gift exchange, hosted at **https://ssproj-77
 1. Add 3–100 people with unique names. Matching preferences are optional.
 2. **Would love to buy for / Gostaria de presentear** lists people this participant prefers to give to. The draw fulfills as many preferences as a valid assignment allows.
 3. **Shouldn’t buy for / Não deve presentear** excludes those pairings. Exclusions always apply; preferences never override them.
-4. Draw names, then copy and send each participant their own link. Recipients are hidden behind a reveal button.
+4. Optionally add each person’s email address. Draw names, then use **Email link** to open a `mailto:` draft addressed to that person with their own reveal link, a subject, and an English or Portuguese message. Gmail opens if it is your default email handler; otherwise your configured email app opens. You review and send each email. Leave the address blank to fill it in your email app, or keep using **Copy link**. Recipients are hidden behind a reveal button.
 
 Every person gives once and receives once, and nobody draws themselves. Rules are directional: excluding João for Ana does not also exclude Ana for João. Enter both rules when needed. Separate names with commas; full names and accents are supported. Old space-separated lists of first names also work. Unknown names, contradictory rules, and impossible draws receive useful errors instead of hanging.
 
-Groups and current draw links are saved in this browser's local storage. There is no account, database, or messaging integration. Refreshing restores the exchange; “Start fresh” clears it. Editing a name updates matching rules, and removing a participant removes references to them. Changing a completed exchange requires confirmation and a new draw.
+Groups and current draw links are saved in this browser's local storage. There is no account, database, or automatic email delivery service. Email addresses stay in this browser until you open the email draft. Refreshing restores the exchange; “Start fresh” clears it. Editing a name updates matching rules, and removing a participant removes references to them. Changing a completed exchange requires confirmation and a new draw. Email addresses can also be edited directly next to the share buttons, and changing only an email address preserves the current draw and links.
 
 ## Reveal links and compatibility
 
@@ -35,6 +35,7 @@ npm run dev
 Open **http://127.0.0.1:4173**. Run `npm run build` and reload after source edits.
 
 - `SecretSanta.js`: organizer and reveal UI, participant editing, local persistence, clipboard, and confirmation dialogs.
+- `email.js`: safely encoded, individual `mailto:` drafts.
 - `translations.js`: English and Brazilian Portuguese copy.
 - `draw.js`: validated, randomized minimum-cost assignment (Hungarian algorithm, O(n³)).
 - `parseQueryParams.js`: new encrypted links and legacy compatibility.
