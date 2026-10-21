@@ -1,15 +1,32 @@
-<!DOCTYPE html>
-<html lang="en-US">
-
-<head>
-    <title>Secret Santa</title>
-    <link rel="icon" type="image/x-icon" href="favicon.png">
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-    <script src='https://code.jquery.com/jquery-3.4.1.min.js' type='text/javascript'></script>
-    <script src='parseQueryParams.js' type='text/javascript'></script>
-</body>
-
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#244c3e" />
+    <meta
+      name="description"
+      content="A little mystery. A lot of joy. Organize your family’s Secret Santa with preferences, exclusions, and individual reveal links. In English and Portuguese."
+    />
+    <meta name="referrer" content="no-referrer" />
+    <title>Secret Santa · A family tradition</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="SecretSanta.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <dialog
+      id="confirm-dialog"
+      aria-labelledby="dialog-title"
+      aria-describedby="dialog-description"
+    ></dialog>
+    <noscript
+      ><p>
+        This Secret Santa needs JavaScript to draw names. / Ative o JavaScript
+        para sortear os nomes.
+      </p></noscript
+    >
+  </body>
 </html>

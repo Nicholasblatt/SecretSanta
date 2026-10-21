@@ -1,0 +1,15 @@
+{
+  "name": "family-secret-santa",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.js",
+    "test": "node --test",
+    "build": "node scripts/build.js",
+    "deploy": "npm run build && firebase deploy --only hosting --project ssproj-770af"
+  },
+  "dependencies": {
+    "crypto-js": "4.2.0"
+  }
+}
